@@ -1,0 +1,41 @@
+/* JARVIS HUD design tokens — blueprint V2.4. Single source of truth for colour, type and spacing. */
+:root {
+  --hud-bg: #030913;
+  --hud-panel: rgba(5, 22, 38, 0.76);
+  --hud-panel-strong: rgba(4, 16, 30, 0.94);
+  --hud-cyan: #00d8ff;
+  --hud-ice: #b8f5ff;
+  --hud-blue: #168bff;
+  --hud-white: #eafbff;
+  --hud-muted: #6f9fb4;
+  --hud-line: rgba(0, 216, 255, 0.38);
+  --hud-line-faint: rgba(0, 216, 255, 0.16);
+  --hud-amber: #ffb547;
+  --hud-red: #ff4057;
+  --hud-green: #58f0c2;
+  --hud-grid: rgba(52, 166, 205, 0.09);
+
+  --font-display: 'Rajdhani', 'Segoe UI', sans-serif;
+  --font-mono: 'Share Tech Mono', 'Consolas', monospace;
+
+  --gap: 12px;
+  --pad: 16px;
+  --bank: clamp(290px, 21vw, 410px);
+  --chamfer: 14px;
+
+  /* text scale (UI-09: scalable via --text-scale) */
+  --text-scale: 1;
+  --fs-micro: calc(10px * var(--text-scale));
+  --fs-label: calc(11.5px * var(--text-scale));
+  --fs-body: calc(13.5px * var(--text-scale));
+  --fs-value: calc(22px * var(--text-scale));
+  --fs-title: calc(15px * var(--text-scale));
+}
+
+@media (max-height: 820px) {
+  :root {
+    --gap: 9px;
+    --pad: 12px;
+    --fs-value: calc(19px * var(--text-scale));
+  }
+}

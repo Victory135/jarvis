@@ -1,0 +1,1 @@
+{"default":{"identifier":"default","description":"HUD and mini orb: core events, orb dragging. Telemetry and shell commands are app-defined.","local":true,"windows":["main","orb"],"permissions":["core:default","core:window:allow-start-dragging"]}}

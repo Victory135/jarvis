@@ -1,0 +1,61 @@
+[package]
+name = "jarvis-desktop"
+version = "0.1.0"
+description = "J.A.R.V.I.S. local HUD (unofficial fan build)"
+edition = "2021"
+publish = false
+
+[lib]
+name = "jarvis_desktop_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "=2.7.4", features = [] }
+
+[dependencies]
+tauri = { version = "=2.12.5", features = ["tray-icon"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sysinfo = { version = "=0.40.1", default-features = false, features = ["system", "disk", "network"] }
+
+# Windows-only native features via WinRT (same crate/version Tauri already uses, so no new third-party code):
+# media session (now playing + transport controls), HTTP for user-chosen RSS feeds, XML parsing, opening links.
+# Local speech-to-text providers (blueprint 05): Vosk (prebuilt libvosk, models/vosk-lib) and Whisper (whisper.cpp
+# compiled from source by whisper-rs). Both run on this PC; audio never leaves it and is never written to disk.
+vosk = "=0.3.1"
+whisper-rs = "=0.16.0"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "=0.62.2", features = [
+  "Foundation", "Foundation_Collections", "Media", "Media_Control",
+  "Web", "Web_Http", "Web_Http_Headers", "Data", "Data_Xml", "Data_Xml_Dom", "System",
+  "Storage", "Storage_Streams", "Win32_Security_Cryptography",
+  "Win32_Foundation", "Win32_Security", "Win32_System_JobObjects",
+  "Win32_System_Registry", "Win32_UI_Shell", "Win32_UI_WindowsAndMessaging",
+  "Win32_Media_Audio", "Win32_Media_Audio_Endpoints", "Win32_System_Com", "Win32_System_Com_StructuredStorage", "Win32_System_Variant",
+] }
+
+# whisper.cpp is far too slow unoptimised; build it optimised even in dev builds.
+[profile.dev.package.whisper-rs-sys]
+opt-level = 3
+[profile.dev.package.whisper-rs]
+opt-level = 3
+
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true
+
+# The release profile above optimises for size, which makes whisper.cpp about 8x slower (4 s to hear a 2 s phrase).
+# Speech recognition is built for speed in every profile.
+[profile.release.package.whisper-rs-sys]
+opt-level = 3
+[profile.release.package.whisper-rs]
+opt-level = 3
+
+# whisper-rs-sys with three Linux-only layout checks removed so the bundled bindings compile on Windows.
+# See vendor/whisper-rs-sys/VENDORED.md.
+[patch.crates-io]
+whisper-rs-sys = { path = "vendor/whisper-rs-sys" }

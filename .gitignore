@@ -1,0 +1,20 @@
+# Models and engines are large and are downloaded separately (see README)
+/models/
+*.gguf
+*.onnx
+ggml-*.bin
+voices-*.bin
+
+# Build output and dependencies
+node_modules/
+dist/
+apps/desktop/src-tauri/target/
+sidecar/.venv/
+__pycache__/
+
+# Local secrets and app data (never commit)
+keys.bin
+keys.tmp
+keys.unreadable
+.env
+*.log

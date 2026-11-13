@@ -1,0 +1,26 @@
+/* Mini orb window: transparent, borderless; only the disc and its label are visible. */
+html, body.orb-body, body.orb-body #root { background: transparent !important; overflow: hidden; }
+body.orb-body { user-select: none; }
+.orb-shell { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+.centre.orb { gap: 4px; width: 100%; height: 100%; }
+.orb-disc {
+  position: relative; width: 150px; height: 150px; border-radius: 50%; cursor: grab;
+  background: radial-gradient(circle, rgba(3, 9, 19, 0.92) 0 62%, rgba(3, 9, 19, 0) 72%);
+}
+/* the reactor's bearing labels are noise at this size */
+.orb-disc .reactor text { display: none; }
+.orb-open {
+  position: absolute; left: 50%; top: 50%; width: 46px; height: 46px; transform: translate(-50%, -50%);
+  border-radius: 50%; border: 0; background: transparent; cursor: pointer;
+}
+.orb-open:focus-visible { outline: 1px solid var(--hud-ice); }
+.orb-label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.24em; color: var(--accent);
+  padding: 2px 8px; background: rgba(3, 9, 19, 0.85); border: 1px solid rgba(0, 216, 255, 0.25); cursor: grab;
+}
+.orb-close {
+  position: absolute; top: 2px; right: 2px; width: 20px; height: 20px; padding: 0; line-height: 18px;
+  font-family: var(--font-mono); font-size: 14px; color: var(--hud-muted); cursor: pointer;
+  background: rgba(3, 9, 19, 0.85); border: 1px solid var(--hud-line); border-radius: 50%; opacity: 0; transition: opacity 150ms;
+}
+.orb-shell:hover .orb-close, .orb-close:focus-visible { opacity: 1; }

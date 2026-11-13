@@ -1,0 +1,6 @@
+# Build settings for the speech engines (see src/stt.rs).
+[env]
+# whisper.cpp is compiled with the CMake that ships with the VS Build Tools.
+CMAKE = 'D:\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe'
+# Use the bindings shipped with whisper-rs-sys (no libclang needed).
+WHISPER_DONT_GENERATE_BINDINGS = "1"
